@@ -1,0 +1,39 @@
+--- dwm.c	2024-05-13 16:56:42.343395696 +0800
++++ dwm.c	2024-05-13 17:00:32.013399661 +0800
+@@ -170,6 +170,7 @@
+ } Rule;
+ 
+ /* user function declarations */
++static void move_cursor_between_screens();
+ 
+ /* function declarations */
+ static void applyrules(Client *c);
+@@ -318,6 +319,28 @@
+ };
+ 
+ /* user function implementations */
++void move_cursor_between_screens() {
++  Display *dpy;
++  Window root, child;
++  int rootX, rootY, winX, winY;
++  unsigned int mask;
++
++  dpy = XOpenDisplay(NULL);
++  root = DefaultRootWindow(dpy);
++
++  XQueryPointer(dpy, root, &root, &child, &rootX, &rootY, &winX, &winY, &mask);
++
++  if (rootX >= 0 && rootX <= 2560 && rootY >= 0 && rootY <= 1440) {
++    // 光标在HDMI屏幕上，将其移动到EDP-1屏幕的中心
++    XWarpPointer(dpy, None, root, 0, 0, 0, 0, 1080 / 2, 1920 / 2);
++  } else {
++    // 光标在其他屏幕上，将其移动到HDMI-2屏幕的中心
++    XWarpPointer(dpy, None, root, 0, 0, 0, 0, 1440, 2560);
++  }
++
++  XFlush(dpy);
++  XCloseDisplay(dpy);
++}
+ 
+ /* function implementations */
+ void applyrules(Client *c) {
