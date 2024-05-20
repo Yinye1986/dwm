@@ -135,6 +135,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ControlMask,           XK_q,      quit,           {0} },
 // User Defined Start
+    { MODKEY,                       XK_grave,  toggle_cursor_between_screens,  {0} },
     { MODKEY,                       XK_F1,     switchlayout,   {0} },
     { MODKEY,                       XK_F2,     spawn,          {.v = firefoxcmd } },
     { MODKEY,                       XK_F3,     switchlayout,   {.v = pcmanfmcmd } },

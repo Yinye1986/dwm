@@ -170,6 +170,7 @@ typedef struct {
 } Rule;
 
 /* user function declarations */
+static void toggle_cursor_between_screens();
 
 /* function declarations */
 static void applyrules(Client *c);
@@ -318,6 +319,31 @@ struct NumTags {
 };
 
 /* user function implementations */
+void toggle_cursor_between_screens() {
+  Display *dpy;
+  Window root, child;
+  int rootX, rootY, winX, winY;
+  unsigned int mask;
+  static int state = 0;
+
+  dpy = XOpenDisplay(NULL);
+  root = DefaultRootWindow(dpy);
+
+  XQueryPointer(dpy, root, &root, &child, &rootX, &rootY, &winX, &winY, &mask);
+
+  if (state == 0) {
+    // 将光标移动到HDMI-2屏幕的中心
+    XWarpPointer(dpy, None, root, 0, 0, 0, 0, 1440 / 2, 2560 / 2);
+    state = 1;
+  } else {
+    // 将光标移动到EDP-1屏幕的中心
+    XWarpPointer(dpy, None, root, 0, 0, 0, 0, 1080, 1920);
+    state = 0;
+  }
+
+  XFlush(dpy);
+  XCloseDisplay(dpy);
+}
 
 /* function implementations */
 void applyrules(Client *c) {
