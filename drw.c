@@ -176,6 +176,7 @@ void drw_clr_create(Drw *drw, Clr *dest, const char *clrname,
 
   if (!XftColorAllocName(drw->dpy, drw->visual, drw->cmap, clrname, dest))
     die("error, cannot allocate color '%s'", clrname);
+  dest->pixel |= 0xff << 24;  
 
   dest->pixel = (dest->pixel & 0x00ffffffU) | (alpha << 24);
 }
