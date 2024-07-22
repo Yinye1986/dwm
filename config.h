@@ -89,12 +89,9 @@ static const char *dmenucmd[] = {
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 static const char *termcmd[] = {"alacritty", NULL};
 // User Defined Start
-static const char *volumeup[] = {"amixer", "-c",     "1",   "-q",
-                                 "set",    "Master", "2%+", NULL};
-static const char *volumedown[] = {"amixer", "-c",     "1",   "-q",
-                                   "set",    "Master", "2%-", NULL};
-static const char *toggle[] = {"amixer", "-c",     "1",      "-q",
-                               "set",    "Master", "toggle", NULL};
+static const char *upvol[] = {"pamixer", "--increase", "1", NULL};
+static const char *downvol[] = {"pamixer", "--decrease", "1", NULL};
+static const char *mutevol[] = {"pamixer", "--toggle-mute", NULL};
 
 void switchlayout(const Arg *arg) {
   Layout *l;
@@ -105,7 +102,7 @@ void switchlayout(const Arg *arg) {
   else
     setlayout(&((Arg){.v = layouts}));
 }
-static const char *firefoxcmd[] = {"firefox", NULL};
+static const char *firefoxcmd[] = {"chromium", NULL};
 static const char *pcmanfmcmd[] = {"yazi", NULL};
 
 static const char *mapsetcmd[] = {
@@ -113,7 +110,7 @@ static const char *mapsetcmd[] = {
 // User Defined End
 
 static const Key keys[] = {
-    /* modifier                     key        function        argument */
+    /* modifier                     key             function        argument */
     {MODKEY, XK_d, spawn, {.v = dmenucmd}},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
     {MODKEY | ControlMask, XK_m, togglebar, {0}},
@@ -154,9 +151,9 @@ static const Key keys[] = {
     {MODKEY, XK_F10, switchlayout, {0}},
     {MODKEY, XK_F11, setlayout, {.v = &layouts[2]}},
     {MODKEY, XK_F12, switchlayout, {0}},
-    {0, XF86XK_AudioRaiseVolume, spawn, {.v = volumeup}},
-    {0, XF86XK_AudioLowerVolume, spawn, {.v = volumedown}},
-    {0, XF86XK_AudioMute, spawn, {.v = toggle}},
+    {0, XF86XK_AudioRaiseVolume, spawn, { .v = upvol }},
+    {0, XF86XK_AudioLowerVolume, spawn, { .v = downvol }},
+    {0, XF86XK_AudioMute, spawn, {.v = mutevol}},
     // User Defined End
 };
 
