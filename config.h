@@ -1,16 +1,5 @@
-// zi ti pei zhi,
-// mo ren zhong duan
-// wo dao ru de tou wen jian
-// wo zi ding yi de shi li
-// wo tian jia de jian wei pei zhi
-
-// User Defined Start
 #include <X11/XF86keysym.h>
-// User Defined End
 
-/* See LICENSE file for copyright and license details. */
-
-/* appearance */
 static const unsigned int borderpx = 2; /* border pixel of windows */
 static const unsigned int snap = 32;    /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
@@ -39,8 +28,7 @@ static const unsigned int alphas[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = {"󰣇", "", "",  "", "",
-                             "",  "", "󰚢", "󰖂"};
+static const char *tags[] = {"󰣇", "", "",  "", "", "",  "", "󰚢", "󰖂"};
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -84,9 +72,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] =
     "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = {
-    "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
-    "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 static const char *termcmd[] = {"alacritty", NULL};
 // User Defined Start
 static const char *upvol[] = {"pamixer", "--increase", "1", NULL};
@@ -102,10 +88,10 @@ void switchlayout(const Arg *arg) {
   else
     setlayout(&((Arg){.v = layouts}));
 }
-static const char *firefoxcmd[] = {"chromium", NULL};
-static const char *pcmanfmcmd[] = {"yazi", NULL};
-
-static const char *mapsetcmd[] = {
+static const char *flameshotcmd[] = {"flameshot", "screen", "-p ~/Downloads/", NULL};
+static const char *pdfReadercmd[] = {"okular", NULL};
+static const char *browsercmd[] = {"chromium", NULL};
+static const char *setKeymapcmd[] = {
     "sh", "-c", "setxkbmap us colemak; xmodmap /home/chris/.Xmodmap", NULL};
 // User Defined End
 
@@ -134,16 +120,22 @@ static const Key keys[] = {
     {MODKEY, XK_period, focusmon, {.i = +1}},
     {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
     {MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
-    TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3)
-        TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
-            TAGKEYS(XK_9, 8){MODKEY | ControlMask, XK_q, quit, {0}},
+    TAGKEYS(XK_1, 0)
+    TAGKEYS(XK_2, 1)
+    TAGKEYS(XK_3, 2)
+    TAGKEYS(XK_4, 3)
+    TAGKEYS(XK_5, 4)
+    TAGKEYS(XK_6, 5)
+    TAGKEYS(XK_7, 6)
+    TAGKEYS(XK_8, 7)
+    TAGKEYS(XK_9, 8){MODKEY | ControlMask, XK_q, quit, {0}},
     // User Defined Start
     {MODKEY, XK_grave, toggle_cursor_between_screens, {0}},
     {MODKEY, XK_F1, switchlayout, {0}},
-    {MODKEY, XK_F2, spawn, {.v = firefoxcmd}},
-    {MODKEY, XK_F3, switchlayout, {.v = pcmanfmcmd}},
-    {MODKEY, XK_F4, switchlayout, {0}},
-    {MODKEY, XK_F5, spawn, {.v = mapsetcmd}},
+    {MODKEY, XK_F2, spawn, {.v = browsercmd}},
+    {MODKEY, XK_F3, spawn, {.v = pdfReadercmd}},
+    {MODKEY, XK_F4, spawn, {.v = flameshotcmd}},
+    {MODKEY, XK_F5, spawn, {.v = setKeymapcmd}},
     {MODKEY, XK_F6, switchlayout, {0}},
     {MODKEY, XK_F7, switchlayout, {0}},
     {MODKEY, XK_F8, switchlayout, {0}},
@@ -153,7 +145,7 @@ static const Key keys[] = {
     {MODKEY, XK_F12, switchlayout, {0}},
     {0, XF86XK_AudioRaiseVolume, spawn, { .v = upvol }},
     {0, XF86XK_AudioLowerVolume, spawn, { .v = downvol }},
-    {0, XF86XK_AudioMute, spawn, {.v = mutevol}},
+    {0, XF86XK_AudioMute, spawn, {.v = flameshotcmd}},
     // User Defined End
 };
 
